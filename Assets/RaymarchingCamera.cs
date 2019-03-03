@@ -36,8 +36,9 @@ public class RaymarchingCamera : SceneViewFilter {
 
     public float _maxDistance;
     public Color _mainColor;
-    public Vector4 _sphere1;
+    public Vector4 _sphere1, _sphere2;
     public Vector4 _box1;
+    public Vector4 _torus1;
     public Vector3 _modInterval;
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination) {
@@ -50,7 +51,9 @@ public class RaymarchingCamera : SceneViewFilter {
         _raymarchMaterial.SetMatrix("_CamToWorld", _camera.cameraToWorldMatrix);
         _raymarchMaterial.SetFloat("_maxDistance", _maxDistance);
         _raymarchMaterial.SetVector("_sphere1", _sphere1);
+        _raymarchMaterial.SetVector("_sphere2", _sphere2);
         _raymarchMaterial.SetVector("_box1", _box1);
+        _raymarchMaterial.SetVector("_torus1", _torus1);
         _raymarchMat.SetVector("_LightDir", _directionalLight ? _directionalLight.forward : Vector3.down);
         _raymarchMaterial.SetColor("_mainColor", _mainColor);
         _raymarchMaterial.SetVector("_modInterval", _modInterval);

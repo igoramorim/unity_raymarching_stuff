@@ -23,7 +23,7 @@
 			uniform sampler2D _CameraDepthTexture;
 			uniform float4x4 _CamFrustum, _CamToWorld;
 			uniform float _maxDistance;
-			uniform float4 _sphere1, _box1;
+			uniform float4 _sphere1, _sphere2, _box1, _torus1;
 			uniform float3 _modInterval;
 			uniform float3 _LightDir;
 			uniform fixed4 _mainColor;
@@ -60,14 +60,23 @@
 
 			float distanceField(float3 p)
 			{
+				float final = 0.0;
+
 				float modX = pMod1(p.x, _modInterval.x);
 				float modY = pMod1(p.y, _modInterval.y);
 				float modZ = pMod1(p.z, _modInterval.z);
 
 				float Sphere1 = sdSphere(p - _sphere1.xyz, _sphere1.w);
+				float Sphere2 = sdSphere(p - _sphere2.xyz, _sphere2.w);
 				float Box1 = sdBox(p - _box1.xyz, _box1.www);
+				float Torus1 = sdTorus(p - _torus1.xyz, _torus1.yy);
 				
-				return opS(Sphere1, Box1);
+				float f1 = opS(Sphere1, Box1);
+				//float f2 = opS(f1, Sphere2);
+				
+				//final = opS(f1, Sphere2);
+				final = f1;
+				return final;
 			}
 
 			float3 getNormal(float3 p)
